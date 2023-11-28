@@ -58,7 +58,15 @@ _SNIPPETS_DIR = Path.home() / "vimfiles" / "UltiSnips"
 project_name = input("Project name: ")
 project_description = input("Project description: ")
 python_min_version = input("Minimum Python version (only the n in 3.n): ")
-python_interpreter_version = sys.version_info.minor
+python_max_version = input("Maximum Python version (blank to use current): ")
+
+if python_max_version:
+    # assume constrained to a range
+    requires_python = f">=3.{python_min_version},<3.{int(python_max_version) + 1}"
+else:
+    # assume current version is ok
+    requires_python = f">=3.{python_min_version}"
+    python_max_version = sys.version_info.minor
 
 
 # ===============================================================================
@@ -96,9 +104,9 @@ def _write_pyproject_toml():
         {
             r"\$1": project_name,
             r"\$2": project_description,
-            r"\$3": python_min_version,
+            r"\$3": requires_python,
             r"\$4": "",
-            r"\$5": '"commitizen", "pre-commit","pytest", "tox"',
+            r"\$5": '"commitizen", "pre-commit", "pytest", "tox"',
         },
     )
     commitizen = _select_snippet(_SNIPPETS_DIR / "toml.snippets", "cz")
@@ -110,17 +118,16 @@ def _write_pyproject_toml():
     with (project_root / "pyproject.toml").open("w") as f:
         _ = f.write("\n\n".join([pyproject, commitizen, isort, pyright]))
 
-
 def _write_pre_commit_config():
     yaml_snippets = _SNIPPETS_DIR / "yaml.snippets"
-    subs = {r"\$1": str(python_min_version), r"\$2": str(python_interpreter_version)}
+    subs = {r"\$1": str(python_min_version), r"\$2": str(python_max_version)}
     with (project_root / ".pre-commit-config.yaml").open("w") as f:
         _ = f.write(_select_snippet(yaml_snippets, "pre-commit-config", subs))
 
 
 def _write_tox_ini():
     min_ver = int(python_min_version)
-    max_ver = python_interpreter_version
+    max_ver = int(python_max_version)
     versions = [f"3{n}" for n in range(min_ver, max_ver + 1)]
     tox_ini_text = [
         "[tox]",
@@ -152,8 +159,11 @@ def _write_project_vimrc():
 def _write_venv_update_script():
     """Create a PowerShell script to sync the venv with pyproject.toml."""
     ps1_snippets = _SNIPPETS_DIR / "ps1.snippets"
+    venv_version = f"3.{python_max_version}"
     with (project_root / "Update-PythonVenv.ps1").open("w") as f:
-        _ = f.write(_select_snippet(ps1_snippets, "update_venv"))
+        _ = f.write(
+            _select_snippet(ps1_snippets, "update_venv", {r"\$1": venv_version})
+        )
 
 
 def _write_conftest():
@@ -177,7 +187,7 @@ def _initialize_git():
 def _update_pre_commit():
     # run pre-commit autoupdate
     cmds = [
-        "py -m venv venv",
+        f"py -3.{python_max_version} -m venv venv",
         ".\\venv\\Scripts\\python.exe -m pip install --upgrade pip",
         ".\\venv\\Scripts\\python.exe -m pip install pre-commit",
         ".\\venv\\Scripts\\pre-commit.exe autoupdate",
