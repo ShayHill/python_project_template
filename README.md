@@ -3,13 +3,13 @@
 my standard Python project template
 
 ```
-MY_PROJECTS_DIR
-└── project_name
-    ├── src
-    │   └── project_name
+MY_PROJECTS_DIR/
+└── project_name/
+    ├── src/
+    │   └── project_name/t 
     │       ├── __init__.py
     │       └── py.typed
-    ├── tests
+    ├── tests/
     │   ├── __init__.py
     │   └── conftest.py
     ├── .git

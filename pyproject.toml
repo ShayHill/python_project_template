@@ -7,7 +7,8 @@ authors = [{ name = "Shay Hill", email = "shay_public@hotmail.com" }]
 license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["basic_colormath", "offset_poly", "svg_ultralight", "vec2_math" ]
+
 
 [project.optional-dependencies]
 dev = ["commitizen", "pre-commit","pytest", "tox"]

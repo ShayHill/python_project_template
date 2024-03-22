@@ -7,24 +7,24 @@ Run this script from any directory. There are two congifuration variables at the
 of the file: _MY_PROJECTS_DIR and _SNIPPETS_DIR. The resulting file structure will be:
 
 ```
-_MY_PROJECTS_DIR
-    project_root
-        src
-            project_name
-                __init__.py
-                py.typed
-        tests
-            __init__.py
-            conftest.py
-        .git
-        .gitignore
-        .pre-commit-config.yaml
-        .vimrc
-        .vimspector.json
-        README.md
-        Update-PythonVenv.ps1  # script to sync venv with pyproject.toml
-        pyproject.toml
-        tox.ini
+MY_PROJECTS_DIR/
+└── project_name/
+    ├── src/
+    │   └── project_name/
+    │       ├── __init__.py
+    │       └── py.typed
+    ├── tests/
+    │   ├── __init__.py
+    │   └── conftest.py
+    ├── .git
+    ├── .gitignore
+    ├── .pre-commit-config.yaml
+    ├── .vimrc
+    ├── .vimspector.json
+    ├── README.md
+    ├── Update-PythonVenv.ps1
+    ├── pyproject.toml
+    └── tox.ini
 ```
 
 After running this script, the venv will be activated. To add more dependencies
