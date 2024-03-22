@@ -8,23 +8,23 @@ of the file: _MY_PROJECTS_DIR and _SNIPPETS_DIR. The resulting file structure wi
 
 ```
 MY_PROJECTS_DIR/
-└── project_name/
-    ├── src/
-    │   └── project_name/
-    │       ├── __init__.py
-    │       └── py.typed
-    ├── tests/
-    │   ├── __init__.py
-    │   └── conftest.py
-    ├── .git
-    ├── .gitignore
-    ├── .pre-commit-config.yaml
-    ├── .vimrc
-    ├── .vimspector.json
-    ├── README.md
-    ├── Update-PythonVenv.ps1
-    ├── pyproject.toml
-    └── tox.ini
+ΓööΓöÇΓöÇ project_name/
+    Γö£ΓöÇΓöÇ src/
+    Γöé   ΓööΓöÇΓöÇ project_name/
+    Γöé       Γö£ΓöÇΓöÇ __init__.py
+    Γöé       ΓööΓöÇΓöÇ py.typed
+    Γö£ΓöÇΓöÇ tests/
+    Γöé   Γö£ΓöÇΓöÇ __init__.py
+    Γöé   ΓööΓöÇΓöÇ conftest.py
+    Γö£ΓöÇΓöÇ .git
+    Γö£ΓöÇΓöÇ .gitignore
+    Γö£ΓöÇΓöÇ .pre-commit-config.yaml
+    Γö£ΓöÇΓöÇ .vimrc
+    Γö£ΓöÇΓöÇ .vimspector.json
+    Γö£ΓöÇΓöÇ README.md
+    Γö£ΓöÇΓöÇ Update-PythonVenv.ps1
+    Γö£ΓöÇΓöÇ pyproject.toml
+    ΓööΓöÇΓöÇ tox.ini
 ```
 
 After running this script, the venv will be activated. To add more dependencies
@@ -83,14 +83,14 @@ init_text_template = f'''"""{{}}
 
 
 def _select_snippet(
-    snippet_file: Path, snippet_name: str, subs: dict[str, str] | None = None
+    snippet_file: Path, snippet_trigger: str, subs: dict[str, str] | None = None
 ) -> str:
-    pattern = re.compile(rf"snippet {snippet_name}(.*?)endsnippet", re.DOTALL)
+    pattern = re.compile(rf"snippet {snippet_trigger}(.*?)endsnippet", re.DOTALL)
     with open(snippet_file) as f:
         match = re.search(pattern, f.read())
     if not match:
-        raise ValueError(f"Snippet {snippet_name} not found in {snippet_file}")
-    match_str = match.group(1)
+        raise ValueError(f"Snippet {snippet_trigger} not found in {snippet_file}")
+    match_str = "\n".join(match.group(1).split("\n")[1:])
     for k, v in (subs or {}).items():
         match_str = re.sub(k, v, match_str)
     return match_str
@@ -117,6 +117,7 @@ def _write_pyproject_toml():
 
     with (project_root / "pyproject.toml").open("w") as f:
         _ = f.write("\n\n".join([pyproject, commitizen, isort, pyright]))
+
 
 def _write_pre_commit_config():
     yaml_snippets = _SNIPPETS_DIR / "yaml.snippets"
