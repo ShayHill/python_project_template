@@ -6,7 +6,7 @@ my standard Python project template
 MY_PROJECTS_DIR/
 └── project_name/
     ├── src/
-    │   └── project_name/t 
+    │   └── project_name/
     │       ├── __init__.py
     │       └── py.typed
     ├── tests/
@@ -19,8 +19,7 @@ MY_PROJECTS_DIR/
     ├── .vimspector.json
     ├── README.md
     ├── Update-PythonVenv.ps1
-    ├── pyproject.toml
-    └── tox.ini
+    └── pyproject.toml
 ```
 
 I use a script to create this, there are too many names and versions to update by hand. The script `python_project_update.py` is here, along with `Update-PythonVenv.ps1`, which I usually would not commit.
