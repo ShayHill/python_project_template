@@ -39,4 +39,3 @@ The script does not query for dependencies. To add dependencies
 * edit `pyproject.toml`
 * deactivate the venv (if activated)
 * `Update-PythonVenv.ps1` (this will require pip-tools in your system Python)
-
