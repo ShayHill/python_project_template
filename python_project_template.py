@@ -59,6 +59,14 @@ project_description = input("Project description: ")
 python_min_version = input("Minimum Python version (only the n in 3.n): ")
 python_max_version = input("Maximum Python version (blank to use current): ")
 
+deps = input("Dependencies (comma-separated): ")
+deps = [x.strip() for x in deps.split(",")] if deps else []
+
+default_dev_deps = ["commitizen", "pre-commit", "pytest", "tox"]
+dev_deps = input(f"Dev dependencies (comma-separated) default = {default_dev_deps}: ")
+dev_deps = [x.strip() for x in dev_deps.split(",")] if dev_deps else default_dev_deps
+
+
 if python_max_version:
     # assume constrained to a range
     requires_python = f">=3.{python_min_version},<3.{int(python_max_version) + 1}"
@@ -95,6 +103,11 @@ def _select_snippet(
     return match_str
 
 
+def _format_dependencies(deps_: list[str]):
+    """Format dependencies for pyproject.toml."""
+    return ", ".join([f'"{dep}"' for dep in deps_])
+
+
 def _write_pyproject_toml():
     toml_snippets = _SNIPPETS_DIR / "toml.snippets"
     pyproject = _select_snippet(
@@ -104,8 +117,8 @@ def _write_pyproject_toml():
             r"\$1": project_name,
             r"\$2": project_description,
             r"\$3": requires_python,
-            r"\$4": "",
-            r"\$5": '"commitizen", "pre-commit", "pytest", "tox"',
+            r"\$4": _format_dependencies(deps),
+            r"\$5": _format_dependencies(dev_deps),
         },
     )
     commitizen = _select_snippet(_SNIPPETS_DIR / "toml.snippets", "cz")
