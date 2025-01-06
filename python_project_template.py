@@ -31,11 +31,13 @@ After running this script, the venv will be activated. To add more dependencies
 * run `Update-PythonVenv.ps1` (this will require pip-tools in your system Python)
 """
 
-import sys
-import subprocess
-from pathlib import Path
+from __future__ import annotations
+
 import datetime
 import re
+import subprocess
+import sys
+from pathlib import Path
 
 # ===============================================================================
 #   Configuration
