@@ -185,8 +185,10 @@ def _write_venv_update_script():
 
 def _write_conftest():
     python_snippets = _SNIPPETS_DIR / "python.snippets"
+    text = _select_snippet(python_snippets, "conftest")
+    text = text.replace('`!v strftime("%Y-%m-%d")`', creation_date)
     with (project_root / "tests" / "conftest.py").open("w") as f:
-        _ = f.write(_select_snippet(python_snippets, "conftest"))
+        _ = f.write(text)
 
 
 def _write_gitignore():
