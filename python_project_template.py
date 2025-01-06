@@ -222,18 +222,25 @@ def build_project():
     test_dir = project_root / "tests"
     src_dir.mkdir(parents=True)
     test_dir.mkdir(parents=True)
-    (src_dir / "py.typed").touch()
+    _ = (src_dir / "py.typed").write_text(
+        '""" This file is used to indicate to mypy that the package is typed.\n'
+        + "\n"
+        + "Do not delete this comment, because empty files choke OneDrive.\n"
+        + '"""'
+    )
     _ = (src_dir / "__init__.py").write_text(
         init_text_template.format("Import functions into the package namespace.")
     )
-    (test_dir / "__init__.py").touch()
+    _ = (test_dir / "__init__.py").write_text(
+        init_text_template.format("Mark the 'tests' directory as a package.")
+    )
     _ = (project_root / "README.md").write_text(
         "# " + str(project_name) + "\n\n" + project_description + "\n"
     )
 
     _write_pyproject_toml()
     _write_pre_commit_config()
-    _write_tox_ini()
+    # _write_tox_ini()
     _write_vimspector_json()
     _write_gitignore()
     _write_venv_update_script()
