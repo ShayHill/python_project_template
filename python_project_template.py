@@ -126,9 +126,13 @@ def _write_pyproject_toml():
         toml_snippets, "pyright", {r"\$1": python_min_version, r"\$2": ""}
     )
     isort = _select_snippet(_SNIPPETS_DIR / "toml.snippets", "isort")
+    tox_envs = ",".join(
+        [f"3{n}" for n in range(int(python_min_version), int(python_max_version) + 1)]
+    )
+    tox = _select_snippet(_SNIPPETS_DIR / "toml.snippets", "tox", {r"\$1": tox_envs})
 
     with (project_root / "pyproject.toml").open("w") as f:
-        _ = f.write("\n\n".join([pyproject, commitizen, isort, pyright]))
+        _ = f.write("\n\n".join([pyproject, commitizen, isort, tox, pyright]))
 
 
 def _write_pre_commit_config():
@@ -138,20 +142,20 @@ def _write_pre_commit_config():
         _ = f.write(_select_snippet(yaml_snippets, "pre-commit-config", subs))
 
 
-def _write_tox_ini():
-    min_ver = int(python_min_version)
-    max_ver = int(python_max_version)
-    versions = [f"3{n}" for n in range(min_ver, max_ver + 1)]
-    tox_ini_text = [
-        "[tox]",
-        f"envlist = py{{{','.join(versions[::-1])}}}",
-        "",
-        "[testenv]",
-        "deps = pytest",
-        "commands = pytest",
-    ]
-    with (project_root / "tox.ini").open("w") as f:
-        _ = f.write("\n".join(tox_ini_text))
+# def _write_tox_ini():
+#     min_ver = int(python_min_version)
+#     max_ver = int(python_max_version)
+#     versions = [f"3{n}" for n in range(min_ver, max_ver + 1)]
+#     tox_ini_text = [
+#         "[tox]",
+#         f"envlist = py{{{','.join(versions[::-1])}}}",
+#         "",
+#         "[testenv]",
+#         "deps = pytest",
+#         "commands = pytest",
+#     ]
+#     with (project_root / "tox.ini").open("w") as f:
+#         _ = f.write("\n".join(tox_ini_text))
 
 
 def _write_vimspector_json():
