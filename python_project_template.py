@@ -6,26 +6,23 @@
 Run this script from any directory. There are two congifuration variables at the top
 of the file: _MY_PROJECTS_DIR and _SNIPPETS_DIR. The resulting file structure will be:
 
-```
 MY_PROJECTS_DIR/
-ΓööΓöÇΓöÇ project_name/
-    Γö£ΓöÇΓöÇ src/
-    Γöé   ΓööΓöÇΓöÇ project_name/
-    Γöé       Γö£ΓöÇΓöÇ __init__.py
-    Γöé       ΓööΓöÇΓöÇ py.typed
-    Γö£ΓöÇΓöÇ tests/
-    Γöé   Γö£ΓöÇΓöÇ __init__.py
-    Γöé   ΓööΓöÇΓöÇ conftest.py
-    Γö£ΓöÇΓöÇ .git
-    Γö£ΓöÇΓöÇ .gitignore
-    Γö£ΓöÇΓöÇ .pre-commit-config.yaml
-    Γö£ΓöÇΓöÇ .vimrc
-    Γö£ΓöÇΓöÇ .vimspector.json
-    Γö£ΓöÇΓöÇ README.md
-    Γö£ΓöÇΓöÇ Update-PythonVenv.ps1
-    Γö£ΓöÇΓöÇ pyproject.toml
-    ΓööΓöÇΓöÇ tox.ini
-```
+└── project_name/
+    ├── src/
+    │   └── project_name/
+    │       ├── __init__.py
+    │       └── py.typed
+    ├── tests/
+    │   ├── __init__.py
+    │   └── conftest.py
+    ├── .git
+    ├── .gitignore
+    ├── .pre-commit-config.yaml
+    ├── .vimrc
+    ├── .vimspector.json
+    ├── README.md
+    ├── Update-PythonVenv.ps1
+    └── pyproject.toml
 
 After running this script, the venv will be activated. To add more dependencies
 
