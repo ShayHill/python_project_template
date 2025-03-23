@@ -202,8 +202,6 @@ def _initialize_git() -> None:
 
 def _update_pre_commit() -> None:
     # run pre-commit autoupdate
-    # TODO: I don't know why cwd is not working here. Probably a typo. This works if
-    # it's a little uglier.
     venv = project_root / "venv"
     python = project_root / "venv" / "Scripts" / "python.exe"
     pre_commit = project_root / "venv" / "Scripts" / "pre-commit.exe"
@@ -215,7 +213,7 @@ def _update_pre_commit() -> None:
         f"{pre_commit} run -a",
     ]
     for cmd in cmds:
-        _ = subprocess.run(cmd.split(" "))
+        _ = subprocess.run(cmd.split(" "), cwd=project_root, check=True)
 
 
 def build_project() -> None:
