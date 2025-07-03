@@ -67,10 +67,10 @@ class UserInput:
     def init_text_template(self) -> str:
         """Return the template for the __init__.py file."""
         lines = [
-            '"""{{}}',
+            '"""{}',
             "",
             ":author: ShayHill",
             f":created: {self.creation_date}",
-            '"""',
+            '"""\n',
         ]
-        return "".join(lines)
+        return "\n".join(lines)
