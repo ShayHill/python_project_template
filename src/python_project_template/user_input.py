@@ -18,11 +18,9 @@ class UserInput:
 
     def __init__(self) -> None:
         """Initialize the user input with project details."""
-        project_name = input("Project name: ")
-        self.project_name = project_name or "temp_project"
+        self.project_name = input("Project name: ")
         self.project_description = input("Project description: ")
-        python_min_version = input("Minimum Python version (only the n in 3.n): ")
-        self.python_min_version = python_min_version or "10"
+        self.python_min_version = input("Minimum Python version (only the n in 3.n): ")
         self._python_max_version = input(
             "Maximum Python version (blank to use current): "
         )
