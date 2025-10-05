@@ -1,22 +1,26 @@
-
 [project]
-name = "python_project_template"
+name = "python-project-template"
 version = "0.1.0"
-description = "my standard Python project template"
-authors = [{ name = "Shay Hill", email = "shay_public@hotmail.com" }]
-license = {text = "MIT"}
+description = "my standard Python project template for setuptools or uv"
 readme = "README.md"
-requires-python = ">=3.10"
-dependencies = ["basic_colormath", "offset_poly", "svg_ultralight", "vec2_math" ]
-
-
-[project.optional-dependencies]
-dev = ["commitizen", "pre-commit","pytest", "tox"]
+license = "MIT"
+authors = [
+    { name = "Shay Hill", email = "shay_public@hotmail.com" }
+]
+requires-python = ">=3.9"
+dependencies = []
 
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.8.22,<0.9.0"]
+build-backend = "uv_build"
 
+[dependency-groups]
+dev = [
+    "commitizen>=4.9.1",
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+    "tox>=4.30.3",
+]
 
 
 [tool.commitizen]
@@ -27,17 +31,34 @@ major-version-zero = true
 version_files = ["pyproject.toml:^version"]
 
 
-
 [tool.isort]
 profile = "black"
 
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+pythonpath = ["tests"]
+log_cli = 1
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py{39,310,311,312,313}
+
+[testenv]
+deps = pytest
+commands = pytest
+"""
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
 
 
 [tool.pyright]
 include = ["src"]
 exclude = ["**/__pycache__.py"]
 
-pythonVersion = "3.10"
+pythonVersion = "3.9"
 pythonPlatform = "Any"
 
 typeCheckingMode = "strict"
@@ -50,8 +71,5 @@ reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnusedCallResult = true
 
-# venvPath = "C:\\\\Users\\\\shaya\\\\AppData\\\\Local\\\\pypoetry\\\\Cache\\\\virtualenvs"
-# venv = "C:\\\\Users\\\\shaya\\\\AppData\\\\Local\\\\pypoetry\\\\Cache\\\\virtualenvs\\\\docx2python-fuFHBYOz-py3.11"
-# extraPaths = ["__pypackages__/3.11/lib"]
 venvPath = "."
-venv = "./venv"
+venv = "./.venv"
