@@ -33,13 +33,18 @@ uv sync
 """
 
 from __future__ import annotations
-
+import re
+import datetime
 import subprocess
 
 from python_project_template import chores, paths, project_files
 from python_project_template.project_files import select_snippet
 from python_project_template.user_input import UserInput
 
+MIT_URL = (
+    "https://raw.githubusercontent.com/github/"
+    + "choosealicense.com/gh-pages/_licenses/mit.txt"
+)
 
 def _init_project(user: UserInput) -> None:
     """Initialize a new project using the `uv` package."""
@@ -70,21 +75,12 @@ def _add_tool_config_to_pyproject(user: UserInput) -> None:
         toml_snippets, "pyright", {r"\$1": user.python_min_version, r"\$2": ""}
     ).replace('venv = "./venv"', 'venv = "./.venv"')
     isort = select_snippet(paths.SNIPPETS_DIR / "toml.snippets", "isort")
-    tox_envs = ",".join(
-        [
-            f"3{n}"
-            for n in range(
-                int(user.python_min_version), int(user.python_max_version) + 1
-            )
-        ]
-    )
-    tox = select_snippet(
-        paths.SNIPPETS_DIR / "toml.snippets", "tox", {r"\$1": tox_envs}
-    )
+    pytest = select_snippet(paths.SNIPPETS_DIR / "toml.snippets", "pytest")
+    ruff = select_snippet(paths.SNIPPETS_DIR / "toml.snippets", "ruff")
 
     with (user.project_root / "pyproject.toml").open("a") as f:
         _ = f.write("\n\n")
-        _ = f.write("\n\n".join([commitizen, isort, tox, pyright]))
+        _ = f.write("\n\n".join([commitizen, isort, pytest, ruff, pyright]))
 
 
 def _add_license_to_pyproject(user: UserInput) -> None:
@@ -101,6 +97,21 @@ def _add_license_to_pyproject(user: UserInput) -> None:
         raise ValueError(msg)
     with pyproject.open("w") as f:
         f.writelines(lines)
+
+    # Add the LICENSE file
+    license_path = user.project_root / "LICENSE"
+    year = datetime.datetime.now().year
+    cmd = ["curl", "-s", MIT_URL, "-o", str(license_path)]
+    _ = subprocess.run(cmd, check=True)
+
+    with open(license_path, "r", encoding="utf-8") as file:
+        license_text = file.read()
+    # remove instructions between --- ... ---
+    license_text = re.sub(r'---.*?---', '', license_text, flags=re.DOTALL).strip()
+    license_text = license_text.replace("[year]", str(year))
+    license_text = license_text.replace("[fullname]", "Shay Hill")
+    with open(license_path, "w", encoding="utf-8") as file:
+        _ = file.write(license_text)
 
 
 def _update_pre_commit(user: UserInput) -> None:

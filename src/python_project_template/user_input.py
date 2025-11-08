@@ -10,7 +10,7 @@ from pathlib import Path
 
 from python_project_template import paths
 
-_DEFAULT_DEV_DEPS = ["commitizen", "pre-commit", "pytest", "tox"]
+_DEFAULT_DEV_DEPS = ["commitizen", "pre-commit", "pytest"]
 
 
 class UserInput:
@@ -67,7 +67,7 @@ class UserInput:
         lines = [
             '"""{}',
             "",
-            ":author: ShayHill",
+            ":author: Shay Hill",
             f":created: {self.creation_date}",
             '"""\n',
         ]
