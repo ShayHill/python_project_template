@@ -23,7 +23,7 @@ def select_snippet(
     """
     pattern = re.compile(rf"snippet {snippet_trigger}(.*?)endsnippet", re.DOTALL)
     with snippet_file.open() as f:
-        match = re.search(pattern, f.read())
+        match = pattern.search(f.read())
     if not match:
         msg = f"Snippet {snippet_trigger} not found in {snippet_file}"
         raise ValueError(msg)
