@@ -1,5 +1,7 @@
 # python_project_template
 
+tag 0.2.0 is the last version with setuptools support. This now only creates uv projects.
+
 my standard Python project template
 
 ```
@@ -22,20 +24,12 @@ MY_PROJECTS_DIR/
     └── pyproject.toml
 ```
 
-I use a script to create this, there are too many names and versions to update by hand. The script `python_project_update.py` is here, along with `Update-PythonVenv.ps1`, which I usually would not commit.
-
-The script is the only thing that matters, because there is too much noise in a Python project to just clone one and use it. The rest is here for conversation's sake. This is the canonical version of my Python project template script. The canonical versions of most of the files are in my `~\vimfiles\Ultisnips` dir.
+There is too much noise in a Python project to just clone one and use it. This is the canonical version of my Python project template script. The canonical versions of most of the files are in my `~\vimfiles\Ultisnips` dir.
 
 In addition to creating files, the script
 
-* creates a Python venv in `project_root\venv`
+* creates a Python venv in `project_root\.venv`
 * creates pre-commit environment
 * initializes git
 * makes 0th commit with just a mostly empty `README.md`
 * creates and checks out dev branch
-
-The script does not query for dependencies. To add dependencies
-
-* edit `pyproject.toml`
-* deactivate the venv (if activated)
-* `Update-PythonVenv.ps1` (this will require pip-tools in your system Python)
