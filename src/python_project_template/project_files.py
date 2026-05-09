@@ -115,3 +115,5 @@ def write_readme(user: UserInput) -> None:
     _ = (user.project_root / "README.md").write_text(
         "# " + str(user.project_name) + "\n\n" + user.project_description + "\n"
     )
+
+

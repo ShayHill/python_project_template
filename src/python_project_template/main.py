@@ -113,6 +113,34 @@ def _add_license_to_pyproject(user: UserInput) -> None:
     with open(license_path, "w", encoding="utf-8") as file:
         _ = file.write(license_text)
 
+def _add_classifiers_to_pyproject(user: UserInput) -> None:
+    """Add classifiers to pyproject.toml."""
+    pyproject = user.project_root / "pyproject.toml"
+    with pyproject.open() as f:
+        lines = f.readlines()
+    classifiers = [
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+    ]
+    for version in range(int(user.python_min_version), int(user.python_max_version) + 1):
+        classifiers.append(f"Programming Language :: Python :: 3.{version}")
+    classifiers.append("Typing :: Typed")
+    classifier_block = (
+        "classifiers = [\n"
+        + "".join(f'    "{c}",\n' for c in classifiers)
+        + "]\n"
+    )
+    for i, line in enumerate(lines):
+        if line.startswith("requires-python"):
+            lines.insert(i + 1, classifier_block)
+            break
+    else:
+        msg = "Could not find requires-python in pyproject.toml"
+        raise ValueError(msg)
+    with pyproject.open("w") as f:
+        f.writelines(lines)
 
 def _update_pre_commit(user: UserInput) -> None:
     """Run pre-commit autoupdate and run all hooks."""
@@ -133,6 +161,7 @@ def build_project() -> None:
     _init_project(user)
     _add_tool_config_to_pyproject(user)
     _add_license_to_pyproject(user)
+    _add_classifiers_to_pyproject(user)
 
     project_files.write_py_typed(user)
     project_files.write_src_init(user)
