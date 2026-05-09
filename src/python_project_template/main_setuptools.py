@@ -66,12 +66,12 @@ def _write_pyproject_toml(user: UserInput) -> None:
             )
         ]
     )
-    tox = select_snippet(
-        paths.SNIPPETS_DIR / "toml.snippets", "tox", {r"\$1": tox_envs}
-    )
+    # tox = select_snippet(
+    #     paths.SNIPPETS_DIR / "toml.snippets", "tox", {r"\$1": tox_envs}
+    # )
 
     with (user.project_root / "pyproject.toml").open("w") as f:
-        _ = f.write("\n\n".join([pyproject, commitizen, isort, tox, pyright]))
+        _ = f.write("\n\n".join([pyproject, commitizen, isort, pyright]))
 
 
 def _write_venv_update_script(user: UserInput) -> None:

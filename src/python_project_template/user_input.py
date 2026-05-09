@@ -10,7 +10,7 @@ from pathlib import Path
 
 from python_project_template import paths
 
-_DEFAULT_DEV_DEPS = ["commitizen", "pre-commit", "pytest"]
+_DEFAULT_DEV_DEPS = ["commitizen", "pre-commit", "pytest", "ruff"]
 
 
 class UserInput:
