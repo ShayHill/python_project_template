@@ -19,7 +19,7 @@ dev = [
     "commitizen>=4.9.1",
     "pre-commit>=4.3.0",
     "pytest>=8.4.2",
-    "tox>=4.30.3",
+    "ruff"
 ]
 
 
@@ -62,10 +62,8 @@ pythonVersion = "3.9"
 pythonPlatform = "Any"
 
 typeCheckingMode = "strict"
-reportShadowedImports = true
 reportCallInDefaultInitializer = true
 reportImplicitStringConcatenation = true
-# reportMissingSuperCall = true
 reportPropertyTypeMismatch = true
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
