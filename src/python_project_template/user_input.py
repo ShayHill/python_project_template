@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from python_project_template import paths
+from python_project_template.latest_python_version import get_latest_python_version
 
 _DEFAULT_DEV_DEPS = ["commitizen", "pre-commit", "pytest", "ruff"]
 
@@ -59,7 +60,7 @@ class UserInput:
     @property
     def python_max_version(self) -> str:
         """Return the maximum Python version."""
-        return self._python_max_version or str(sys.version_info.minor)
+        return self._python_max_version or str(get_latest_python_version()[1])
 
     @property
     def init_text_template(self) -> str:

@@ -174,7 +174,8 @@ def build_project() -> None:
 
     chores.initialize_git(user)
     _update_pre_commit(user)
-
+    tag_cmd = ["git", "tag", "-a", "0.1.0", "-m", '"0.1.0"']
+    _ = subprocess.run(tag_cmd, cwd=user.project_root, check=True)
 
 if __name__ == "__main__":
     build_project()
