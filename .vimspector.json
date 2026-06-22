@@ -10,7 +10,7 @@
                 "cwd": "${workspaceRoot}",
                 "python": "${workspaceRoot}/.venv/Scripts/python.exe",
                 "program": "${file}",
-                "stopOnEntry": false
+                "pythonArgs": ["-Xfrozen_modules=off"]
             },
             "breakpoints": {
                 "exception": {
@@ -30,7 +30,7 @@
                 "cwd": "${workspaceRoot}",
                 "python": "${workspaceRoot}/.venv/Scripts/python.exe",
                 "program": "${workspaceRoot}/src/python_project_template/main.py",
-                "stopOnEntry": false
+                "pythonArgs": ["-Xfrozen_modules=off"]
             },
             "breakpoints": {
                 "exception": {
@@ -48,7 +48,9 @@
                 "module": "pytest",
                 "type": "python",
                 "request": "launch",
+                "cwd": "${workspaceRoot}",
                 "python": "${workspaceRoot}/.venv/Scripts/python.exe",
+                "pythonArgs": ["-Xfrozen_modules=off"],
                 "args": [
                     "-q",
                     "${file}"
